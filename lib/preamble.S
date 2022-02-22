@@ -14,5 +14,5 @@ preamble:
   jmp .preamble1
 .preamble2:
   store.w 2147483648, %r0
-  mov %sp, 2048 # set SP
-  mov %fp, 2048 # set FP
+  mov %sp, _estack # set SP
+  mov %fp, _estack # set FP

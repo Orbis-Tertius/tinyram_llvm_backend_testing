@@ -4,7 +4,7 @@ set -e
 
 git clone --depth 1 -b tinyRAM_backend-1 https://github.com/Orbis-Tertius/llvm-project
 cd llvm-project
-git checkout 3c9b52631d0c41488fd00be2ccc793538ff1edea
+git checkout 1f7e48500466eaad9d3ee3bfec7b63f28f629f9a
 mkdir build
 cd build
 CXX=clang++ CC=clang cmake \

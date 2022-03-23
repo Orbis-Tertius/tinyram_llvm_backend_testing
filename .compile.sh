@@ -1,20 +1,20 @@
 #!/bin/bash
 
-clang -O3 -target tinyRAM -I. -c lib/special.c -o build/special.o
-clang -O3 -target tinyRAM -I. -c lib/start.c -o build/start.o
-clang -O3 -target tinyRAM -I. -c lib/preamble.S -o build/preamble.o
-clang -O3 -target tinyRAM -I. -c lib/factorial.c -o build/factorial.o
-clang -O3 -target tinyRAM -I. -c lib/main.c -o build/main.o
+set -e
 
-ld.lld -TtinyRAM.ld -o build/app \
-  build/start.o \
-  build/special.o \
-  build/preamble.o \
-  build/factorial.o \
-  build/main.o
+opts="-O3 -target tinyRAM -I. -target tinyRAM"
 
-llvm-objcopy -O binary build/app build/app.bin
+clang $opts -c lib/special.c -o build/special.o
+clang $opts -c lib/start.c -o build/start.o
+clang $opts -c lib/preamble.S -o build/preamble.o
+clang $opts -c lib/memcpy.c -o build/memcpy.o
+clang $opts -c lib/builtins.c -o build/builtins.o
 
-echo "Application objdump:"
-llvm-objdump --triple=tinyRAM -Drt build/app
-#xxd -c 8 -g 1 build/app.bin
+ld.lld -relocatable \
+	build/special.o \
+	build/start.o \
+	build/preamble.o \
+	build/memcpy.o \
+	build/builtins.o\
+	-o build/runtime.o
+

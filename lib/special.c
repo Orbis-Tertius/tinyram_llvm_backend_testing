@@ -1,6 +1,6 @@
 #include "lib/special.h"
 
-void exitCode(int)  {
+void exitCode(int code)  {
   __asm__("answer %r0");
 }
 
